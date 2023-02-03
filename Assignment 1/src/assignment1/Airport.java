@@ -1,0 +1,30 @@
+package assignment1;
+
+public class Airport {
+
+    private int xCoordinate;
+    private int yCoordinate;
+    private int airportFees;
+
+    public Airport(int xCoordinate, int yCoordinate, int airportFees) {
+
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this.airportFees = airportFees;
+
+    }
+
+
+    public int getFees() {
+        return airportFees;
+    }
+
+
+    public static int getDistance(Airport airport1, Airport airport2) {
+
+        double distance = Math.sqrt((airport1.xCoordinate - airport2.xCoordinate)^2 + (airport1.yCoordinate - airport2.yCoordinate)^2);
+        return (int) Math.ceil(distance);
+
+    }
+
+}
