@@ -69,7 +69,7 @@ public class Hotel {
 //
 //            }
 
-            //TODO
+            //TODO: this is bullshit
 
 
             if (!(rooms[i].equals(new Room(type)))) {
