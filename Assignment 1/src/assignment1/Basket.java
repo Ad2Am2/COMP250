@@ -52,7 +52,9 @@ public class Basket {
             if (i < index) {
                 newReservations[i] = reservations[i];
             } else if (i >= index) {
-                newReservations[i] = reservations[i+1];
+                if (i != newReservations.length) {
+                    newReservations[i] = reservations[i+1];
+                }
             }
 
         }

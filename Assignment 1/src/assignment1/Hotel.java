@@ -57,7 +57,7 @@ public class Hotel {
 
     public boolean cancelRoom(String type) {
 
-
+        //TODO this or IllegalArgumentException?
         if (!(type.equals("double") || type.equals("queen") || type.equals("king"))) {
             return false;
         }

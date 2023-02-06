@@ -22,7 +22,7 @@ public class Airport {
 
     public static int getDistance(Airport airport1, Airport airport2) {
 
-        double distance = Math.sqrt((airport1.xCoordinate - airport2.xCoordinate)^2 + (airport1.yCoordinate - airport2.yCoordinate)^2);
+        double distance = Math.sqrt(Math.pow((airport1.xCoordinate - airport2.xCoordinate),2) + Math.pow((airport1.yCoordinate - airport2.yCoordinate),2));
         return (int) Math.ceil(distance);
 
     }

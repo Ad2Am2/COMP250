@@ -25,6 +25,8 @@ public class FlightReservation extends Reservation{
         double pricePerKilometer = pricePerGallon/kilometersPerGallon;
 
         int price = (int) Math.ceil(distance*pricePerKilometer);
+        price += departureAirport.getFees() + arrivalAirport.getFees();
+        price += 5375;
 
         return price;
 
@@ -33,7 +35,7 @@ public class FlightReservation extends Reservation{
 
     @Override
     public boolean equals(Object object) {
-        if (!object.getClass().getName().equals("FlightReservation")) {
+        if (!object.getClass().equals(this.getClass())) {
             return false;
         }
 

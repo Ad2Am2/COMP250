@@ -16,11 +16,7 @@ public class HotelReservation extends Reservation{
         this.roomType = roomType;
         this.numNights = numNights;
 
-        //TODO super inefficient and disgusting code
-        Room room = new Room(roomType);
-        this.roomPricePerNight = room.getPrice();
-
-        hotel.reserveRoom(roomType);
+        this.roomPricePerNight = hotel.reserveRoom(roomType);
     }
 
     public int getNumOfNights() {
@@ -34,7 +30,7 @@ public class HotelReservation extends Reservation{
 
     public boolean equals(Object object) {
 
-        if (!object.getClass().toString().equals("HotelReservation")) return false;
+        if (!object.getClass().equals(this.getClass())) return false;
 
         HotelReservation hotelReservation = (HotelReservation) object;
 
