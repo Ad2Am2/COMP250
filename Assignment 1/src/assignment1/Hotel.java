@@ -61,26 +61,8 @@ public class Hotel {
         if (!(type.equals("double") || type.equals("queen") || type.equals("king"))) {
             return false;
         }
-
-        for (int i = 0; i < rooms.length; i++) {
-//            if (!(rooms[i].available) && rooms[i].getType().equals(type)) {
-//                rooms[i].changeAvailability();
-//                return true;
-//
-//            }
-
-            //TODO: this is bullshit
-
-
-            if (!(rooms[i].equals(new Room(type)))) {
-                rooms[i].changeAvailability();
-                return true;
-            }
-
-
-        }
-
-        return false;
+        
+        return Room.makeRoomAvailable(rooms, type);;
     }
 
 
