@@ -30,7 +30,7 @@ public class HotelReservation extends Reservation{
 
     public boolean equals(Object object) {
 
-        if (!object.getClass().equals(this.getClass())) return false;
+        if (object == null || !object.getClass().equals(this.getClass())) return false;
 
         HotelReservation hotelReservation = (HotelReservation) object;
 

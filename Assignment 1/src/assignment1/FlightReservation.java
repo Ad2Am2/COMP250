@@ -35,7 +35,7 @@ public class FlightReservation extends Reservation{
 
     @Override
     public boolean equals(Object object) {
-        if (!object.getClass().equals(this.getClass())) {
+        if (object == null || !object.getClass().equals(this.getClass())) {
             return false;
         }
 

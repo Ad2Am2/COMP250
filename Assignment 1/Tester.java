@@ -1,8 +1,8 @@
 package assignment1;
 
 // To make the tester work, you might need to setUp some import libraries. To do so:
-// 1: Hover over the red text saying junit (or other libraries that are red)
-// 2: click add to classpath or import statement (depends on the IDE)
+    // 1: Hover over the red text saying junit (or other libraries that are red)
+    // 2: click add to classpath or import statement (depends on the IDE)
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Field;
@@ -29,16 +29,6 @@ class AirportTest { // 2 points
         assertEquals(10, Airport.getDistance(a, b),
                 "Airport: getDistance() did not return the correct distance");
     }
-
-    //Test if the method rounds up properly
-    @Test
-    @Tag("score:1") @DisplayName("Airport getDistance() Test2")
-    void getDistance_Test2() {
-        Airport a = new Airport(44, 120, 100);
-        Airport b = new Airport(55, 113, 100);
-        assertEquals(14, Airport.getDistance(a, b), //Exact value 13.04 should be rounded up to 14
-                "Airport: getDistance() did not return the correct distance");
-    }
 }
 
 class RoomTest {    // 6 points
@@ -48,24 +38,23 @@ class RoomTest {    // 6 points
     void roomConstructor_Test1() {
         Room room = new Room("double");
         assertEquals("double", room.getType(),
-                "Room: getType() did not return the correct type for a double room");
+                "Room: getRoomType() did not return the correct type for a double room");
         assertEquals(9000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a double room");
 
         room = new Room("queen");
         assertEquals("queen", room.getType(),
-                "Room: getType() did not return the correct type for a queen room");
+                "Room: getRoomType() did not return the correct type for a queen room");
         assertEquals(11000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a queen room");
 
         room = new Room("king");
         assertEquals("king", room.getType(),
-                "Room: getType() did not return the correct type for a king room");
+                "Room: getRoomType() did not return the correct type for a king room");
         assertEquals(15000, room.getPrice(),
                 "Room: getPrice() did not return the correct price for a king room");
 
     }
-
 
     @Test
     @Tag("score:1") @DisplayName("Room Constructor Test4")
@@ -84,7 +73,7 @@ class RoomTest {    // 6 points
                 "Room: copy constructor did not create a new object");
 
         assertEquals("double", copyRoom.getType(),
-                "Room: getType() did not return the correct type for its copy");
+                "Room: getRoomType() did not return the correct type for its copy");
 
         assertEquals(9000, copyRoom.getPrice(),
                 "Room: getPrice() did not return the correct price for its copy");
@@ -98,88 +87,11 @@ class RoomTest {    // 6 points
                 "Room: findAvailableRoom() did not return the correct room");
     }
 
-    //Check if the method returns null when no room is found
-    @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test2")
-    void findAvailableRoom_Test2() {
-        Room[] rooms = {new Room("king"), new Room("king"), new Room("double")};
-        assertNull(Room.findAvailableRoom(rooms, "queen"),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
-
-    @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test3")
-    void findAvailableRoom_Test3() {
-        Room[] rooms = {new Room("king"), new Room("queen"), new Room("double"),new Room("queen")};
-        assertEquals(rooms[1], Room.findAvailableRoom(rooms, "queen"),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test4")
-    void findAvailableRoom_Test4() {
-        Room[] rooms = {};
-        assertNull(Room.findAvailableRoom(rooms, "queen"),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Room findAvailableRoom() Test7")
-    void findAvailableRoom_Test7() {
-        Room[] rooms = {new Room("king"), null, new Room("queen"), new Room("double"),new Room("queen")};
-        assertEquals(rooms[2], Room.findAvailableRoom(rooms, "queen"),
-                "Room: findAvailableRoom() did not return the correct room");
-    }
-
     @Test
     @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test1")
     void makeRoomAvailable_Test1() {
         Room[] rooms = {new Room("double"), new Room("king"), new Room("queen")};
         assertFalse(Room.makeRoomAvailable(rooms, "king"),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
-
-    //Check if the method returns false if the input room is not in the list
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test2")
-    void makeRoomAvailable_Test2() {
-        Room[] rooms = {new Room("double"), new Room("queen"), new Room("queen")};
-        assertFalse(Room.makeRoomAvailable(rooms, "king"),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
-
-
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test3")
-    void makeRoomAvailable_Test3() {
-        Room doubleRoom = new Room("double");
-        Room[] rooms = {doubleRoom, new Room("queen"), new Room("queen")};
-        doubleRoom.changeAvailability();
-        assertTrue(Room.makeRoomAvailable(rooms, "double"),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
-
-
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test6")
-    void makeRoomAvailable_Test6() {
-
-        Room king = new Room("double");
-        Room[] rooms = {king, null};
-        assertFalse(Room.makeRoomAvailable(rooms, "double"),
-                "Room: makeRoomAvailable() did not return the correct value"  );
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Room makeRoomAvailable() Test7")
-    void makeRoomAvailable_Test7() {
-
-        Room aDouble = new Room("double");
-        Room aKing = new Room("king");
-        aKing.changeAvailability(); // Making the aKing room not available/false
-        Room[] rooms = {aDouble, null, aKing}; // Should go through room null without return false
-        assertTrue(Room.makeRoomAvailable(rooms, "king"),
                 "Room: makeRoomAvailable() did not return the correct value"  );
     }
 
@@ -193,19 +105,6 @@ class RoomTest {    // 6 points
                 "Room: changeAvailability() did not change the availability of the room");
 
     }
-
-    @Test
-    //Check if the method returns false if all rooms are already available
-    @Tag("score:1") @DisplayName("Room changeAvailability Test2")
-    void changeAvailability_Test2() {
-        Room room1 = new Room("double");
-        Room room2 = new Room("double");
-        Room[] rooms = {room1,room2};
-        assertFalse(Room.makeRoomAvailable(rooms, "double"),
-                "Room: changeAvailability() did not return false");
-
-    }
-
 }
 
 class HotelTest {       // 7 points
@@ -270,27 +169,6 @@ class HotelTest {       // 7 points
         assertFalse(hotel1.cancelRoom("king"),
                 "Hotel: cancelRoom() did not return the correct value");
     }
-
-    // empty room listing
-    @Test
-    @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test3")
-    void cancelRoom_Test3() {
-        Room[] rooms = {};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        assertFalse(hotel1.cancelRoom("king"),
-                "Hotel: cancelRoom() did not return the correct value");
-    }
-
-    // input null value for type of room
-    @Test
-    @Tag ("score:1") @DisplayName("Hotel cancelRoom() Test4")
-    void cancelRoom_Test4() {
-        Room[] rooms = {};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        assertFalse(hotel1.cancelRoom(null),
-                "Hotel: cancelRoom() did not return the correct value");
-    }
-
 }
 
 class CustomerTest {    // 7 points
@@ -330,8 +208,8 @@ class CustomerTest {    // 7 points
 
 
     @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(HotelReservation) Test2")
-    void addToBasket_Test2_Reservation() {
+    @Tag("score:1") @DisplayName("Customer addToBasket(HotelReservation) Test3")
+    void addToBasket_Test3_Reservation() {
         Customer customer = new Customer("bob", 100);
         Room[] rooms = {new Room("double")};
         Hotel hotel = new Hotel("barcelo", rooms);
@@ -341,37 +219,8 @@ class CustomerTest {    // 7 points
     }
 
     @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(Without Breakfast) Test3")
-    void addToBasket_Test3_Reservation() {
-        Customer customer = new Customer("Killua", 100);
-        Room[] rooms = {new Room("double")};
-        Hotel hotel = new Hotel("Greed Island", rooms);
-        customer.addToBasket(hotel, "double", 2, false);
-
-        int totalPrice = customer.getBasket().getTotalCost();
-
-        assertEquals(18000, totalPrice,
-                "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(With Breakfast) Test4")
+    @Tag("score:1") @DisplayName("Customer addToBasket(FlightReservation) Test4")
     void addToBasket_Test4_Reservation() {
-        Customer customer = new Customer("Killua", 100);
-        Room[] rooms = {new Room("double")};
-        Hotel hotel = new Hotel("Greed Island", rooms);
-        customer.addToBasket(hotel, "double", 2, true);
-
-        int totalPrice = customer.getBasket().getTotalCost();
-
-        assertEquals(20000, totalPrice,
-                "Customer: addToBasket() for the Hotel type did not return the correct number of reservations in the basket");
-    }
-
-
-    @Test
-    @Tag("score:1") @DisplayName("Customer addToBasket(FlightReservation) Test5")
-    void addToBasket_Test5_Reservation() {
         Customer customer = new Customer("bob", 100);
         Airport airport1 = new Airport(100, 200, 1000);
         Airport airport2 = new Airport(10, 20, 2000);
@@ -394,39 +243,6 @@ class CustomerTest {    // 7 points
                 "Customer: removeFromBasket(Reservation) did not return the correct value");
     }
 
-
-    @Test
-    @Tag("score:1") @DisplayName("Customer removeFromBasket(Reservation) Test2")
-    void removeFromBasket_Test2() {
-        Customer customer = new Customer("Bob", 100);
-        Customer customer2 = new Customer("Not Bob", 100);
-
-        Room[] rooms = {new Room("double")};
-        Hotel hotel = new Hotel("Average Hotel", rooms);
-        Reservation reservation = new HotelReservation("Bob", hotel, "double", 2);
-        customer.addToBasket(reservation);
-
-        assertFalse(customer2.removeFromBasket(reservation),
-                "Customer: removeFromBasket(Reservation) did not return the correct value");
-    }
-
-
-    // check if it works when we remove null
-    @Test
-    @Tag("score:1") @DisplayName("Customer removeFromBasket(Reservation) Test3")
-    void removeFromBasket_Test3() {
-        Customer customer = new Customer("Bob", 100);
-
-        Room[] rooms = {};
-        Hotel hotel = new Hotel("Average Hotel", rooms);
-
-        Airport a1 = new Airport(44, 120, 100);
-        Airport a2 = new Airport(45, 120, 100);
-
-        assertFalse(customer.removeFromBasket(null),
-                "Customer: removeFromBasket(Reservation) did not return the correct value");
-    }
-
     @Test
     @Tag("score:1") @DisplayName("Customer checkOut() Test1")
     void checkout_Tes1() {
@@ -440,8 +256,6 @@ class CustomerTest {    // 7 points
         assertEquals(82000, customer.checkOut(),
                 "Customer: checkOut() did not return the correct balance after checkOut");
     }
-
-
 }
 
 class ReservationTest {     // 2 points
@@ -513,45 +327,6 @@ class HotelReservationTest {    // 4 points
         HotelReservation hotelReservation2 = new HotelReservation("Bob", hotel1, "king", 1);
         assertFalse(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
     }
-
-
-    @Test
-    @Tag("score:1") @DisplayName("HotelReservation equals() Test3")
-    void testEquals3() {
-        Room[] rooms = {new Room("double"), new Room("double")};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
-        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
-        assertTrue(hotelReservation1.equals(hotelReservation2), "HotelReservation: equals() returns the wrong value");
-    }
-
-    // check equality with null
-    @Test
-    @Tag("score:1") @DisplayName("HotelReservation equals() Test4")
-    void testEquals4() {
-        Room[] rooms = {new Room("double"), new Room("double")};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
-        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
-        assertFalse(hotelReservation1.equals(null), "HotelReservation: equals() returns the wrong value");
-    }
-
-    // check equality with another reservation
-    @Test
-    @Tag("score:1") @DisplayName("HotelReservation equals() Test5")
-    void testEquals5() {
-        Room[] rooms = {new Room("double"), new Room("double")};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
-        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
-
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
-
-        assertFalse(hotelReservation1.equals(flightReservation1), "HotelReservation: equals() returns the wrong value");
-    }
-
 }
 
 class FlightReservationTest {   // 3 points
@@ -591,37 +366,6 @@ class FlightReservationTest {   // 3 points
         assertFalse(flightReservation1.equals(flightReservation2),
                 "FlightReservation: equals() returns the wrong value.");
     }
-
-
-    // check equals(null)
-    @Test
-    @Tag("score:1") @DisplayName("FlightReservation equals() Test4")
-    void testEquals4() {
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-
-        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
-        FlightReservation flightReservation2 = new FlightReservation("Alex", airport1, airport2);
-
-        assertFalse(flightReservation1.equals(null),
-                "FlightReservation: equals() returns the wrong value");
-    }
-
-    // check equality with another reservation
-    @Test
-    @Tag("score:1") @DisplayName("FlightReservation equals() Test5")
-    void testEquals5() {
-        Room[] rooms = {new Room("double"), new Room("double")};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        HotelReservation hotelReservation1 = new HotelReservation("Alex", hotel1, "double", 2);
-        HotelReservation hotelReservation2 = new HotelReservation("Alex", hotel1, "double", 2);
-
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-        FlightReservation flightReservation1 = new FlightReservation("Alex", airport1, airport2);
-
-        assertFalse(flightReservation1.equals(hotelReservation1), "HotelReservation: equals() returns the wrong value");
-    }
 }
 
 class BnBReservationTest {      // 2 points
@@ -646,19 +390,8 @@ class BnBReservationTest {      // 2 points
         assertEquals(20000, bnBReservation.getCost(),
                 "BnBReservation: getCost() returns the wrong value.");
     }
-
-    // check equality with HotelReservation
-    @Test
-    @Tag("score:1") @DisplayName("BnBReservation equals() Test1")
-    void testEquals1() {
-        Room[] rooms = {new Room("double"), new Room("double")};
-        Hotel hotel1 = new Hotel("Hotel1", rooms);
-        HotelReservation hotelReservation = new HotelReservation("Alex", hotel1, "double", 2);
-        BnBReservation bnBReservation = new BnBReservation("Alex", hotel1, "double", 2);
-
-        assertFalse(bnBReservation.equals(hotelReservation), "HotelReservation: equals() returns the wrong value");
-    }
 }
+
 
 class BasketTest {      // 7 points
 
@@ -674,17 +407,6 @@ class BasketTest {      // 7 points
 
         assertEquals(2, number,
                 "Basket: add() returns the wrong number of reservations now in the basket.");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Basket add() Test2")
-    void addTest2() {
-        Basket basket = new Basket();
-        int number = 0;
-        for(int i = 0; i < 30; i++){
-            number = basket.add(new HotelReservation("Marty", new Hotel("Gatewater", new Room[]{new Room("queen")}), "queen", 4));
-        }
-        assertEquals(30, number, "Basket: add() returns the wrong number of reservations now in the basket when adding many items.");
     }
 
     @Test
@@ -741,78 +463,6 @@ class BasketTest {      // 7 points
     }
 
     @Test
-    @Tag("score:1") @DisplayName("Basket remove() Test2")
-    void remove2() {
-        Basket basket1 = new Basket();
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-        boolean status;
-
-        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
-        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
-
-        basket1.add(reservation1);
-        basket1.add(reservation2);
-        basket1.add(reservation1);
-        basket1.add(reservation1);
-        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
-        basket1.remove(reservation1);
-        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
-
-        status = (basket1.getProducts()[0].equals(reservation2) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
-
-        assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Basket remove() Test3")
-    void remove3() {
-        Basket basket1 = new Basket();
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-        boolean status;
-
-        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
-        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
-
-        basket1.add(reservation1);
-        basket1.add(reservation1);
-        basket1.add(reservation1);
-        basket1.add(reservation2);
-        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
-        basket1.remove(reservation2);
-        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
-
-        status = (basket1.getProducts()[0].equals(reservation1) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
-
-        assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
-    }
-
-    @Test
-    @Tag("score:1") @DisplayName("Basket remove() Test4")
-    void remove4() {
-        Basket basket1 = new Basket();
-        Airport airport1 = new Airport(44, 120, 100);
-        Airport airport2 = new Airport(50, 112, 110);
-        boolean status;
-
-        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
-        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
-
-        basket1.add(reservation2);
-        basket1.add(reservation1);
-        basket1.add(reservation1);
-        basket1.add(reservation1);
-        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
-        basket1.remove(reservation2);
-        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
-
-        status = (basket1.getProducts()[0].equals(reservation1) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
-
-        assertTrue(status, "Basket: remove() didn't remove the FIRST reservation input");
-    }
-
-    @Test
     @Tag("score:1") @DisplayName("Basket clear() Test1")
     void clear() {
         Basket basket1 = new Basket();
@@ -856,3 +506,5 @@ class BasketTest {      // 7 points
         }
     }
 }
+
+

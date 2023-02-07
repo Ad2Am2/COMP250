@@ -56,8 +56,10 @@ public class Room {
     public static Room findAvailableRoom(Room[] rooms, String type) {
 
         for (int i = 0; i < rooms.length; i++) {
-            if (rooms[i].available && rooms[i].type.equals(type)) {
-                return rooms[i];
+            if (!(rooms[i] == null)) {
+                if (rooms[i].available && rooms[i].type.equals(type)) {
+                    return rooms[i];
+                }
             }
         }
         return null;
@@ -66,9 +68,11 @@ public class Room {
     public static boolean makeRoomAvailable(Room[] rooms, String type) {
 
         for (int i = 0; i < rooms.length; i++) {
-            if (rooms[i].available == false) {
-                rooms[i].available = true;
-                return true;
+            if (!(rooms[i] == null)) {
+                if (rooms[i].available == false) {
+                    rooms[i].available = true;
+                    return true;
+                }
             }
         }
         return false;

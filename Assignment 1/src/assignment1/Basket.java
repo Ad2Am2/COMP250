@@ -41,6 +41,7 @@ public class Basket {
         for (int i = 0; i < reservations.length; i++) {
             if (reservation.equals(reservations[i])) {
                 index = i;
+                break;
             }
         }
 
@@ -80,6 +81,27 @@ public class Basket {
         }
 
         return cost;
+    }
+
+
+    public static void main(String[] args) {
+        Basket basket1 = new Basket();
+        Airport airport1 = new Airport(44, 120, 100);
+        Airport airport2 = new Airport(50, 112, 110);
+        boolean status;
+
+        FlightReservation reservation1 = new FlightReservation("Gon", airport1, airport2);
+        FlightReservation reservation2 = new FlightReservation("Killua", airport1, airport2);
+
+        basket1.add(reservation1);
+        basket1.add(reservation2);
+        basket1.add(reservation1);
+        basket1.add(reservation1);
+        // basket1 == {reservation1, reservation2, reservation1, reservation1, . . .}
+        basket1.remove(reservation1);
+        // basket1 == {reservation2, reservation1, reservation1, . . .} AND NOT {reservation2, . . .}
+
+        status = (basket1.getProducts()[0].equals(reservation2) && basket1.getProducts()[1].equals(reservation1) && basket1.getProducts()[2].equals(reservation1));
     }
 
 }

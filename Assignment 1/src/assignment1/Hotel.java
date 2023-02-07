@@ -58,11 +58,11 @@ public class Hotel {
     public boolean cancelRoom(String type) {
 
         //TODO this or IllegalArgumentException?
-        if (!(type.equals("double") || type.equals("queen") || type.equals("king"))) {
+        if (type == null || !(type.equals("double") || type.equals("queen") || type.equals("king"))) {
             return false;
         }
         
-        return Room.makeRoomAvailable(rooms, type);;
+        return Room.makeRoomAvailable(rooms, type);
     }
 
 
