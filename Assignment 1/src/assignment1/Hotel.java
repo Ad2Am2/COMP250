@@ -7,6 +7,8 @@ public class Hotel {
 
     public Hotel(String name, Room[] rooms) {
 
+        if (name == null || rooms == null) throw new IllegalArgumentException("Arguments cannot be null");
+
         this.name = name;
         this.rooms = new Room[rooms.length];
 
@@ -18,7 +20,7 @@ public class Hotel {
 
     public int reserveRoom(String type) {
 
-        if (type.equals("double")){
+        if (type.toLowerCase().equals("double")){
 
             Room r = Room.findAvailableRoom(rooms, "double");
             if (r != null) {
@@ -28,7 +30,7 @@ public class Hotel {
                 throw new IllegalArgumentException("There is no available room of type double!");
             }
 
-        } else if (type.equals("queen")) {
+        } else if (type.toLowerCase().equals("queen")) {
 
             Room r = Room.findAvailableRoom(rooms, "queen");
             if (r != null) {
@@ -38,7 +40,7 @@ public class Hotel {
                 throw new IllegalArgumentException("There is no available room of type queen!");
             }
 
-        } else if (type.equals("king")) {
+        } else if (type.toLowerCase().equals("king")) {
 
             Room r = Room.findAvailableRoom(rooms, "king");
             if (r != null) {
@@ -49,7 +51,7 @@ public class Hotel {
             }
 
         } else {
-            throw new IllegalArgumentException("The type of the room to reserve must either \"double\", \"queen\", or \"king\". ");
+            throw new IllegalArgumentException("The type of the room to reserve must either \"double\", \"queen\", or \"king\" (case insensitive).");
         }
 
     }
@@ -58,7 +60,7 @@ public class Hotel {
     public boolean cancelRoom(String type) {
 
         //TODO this or IllegalArgumentException?
-        if (type == null || !(type.equals("double") || type.equals("queen") || type.equals("king"))) {
+        if (type == null || !(type.toLowerCase().equals("double") || type.toLowerCase().equals("queen") || type.toLowerCase().equals("king"))) {
             return false;
         }
         

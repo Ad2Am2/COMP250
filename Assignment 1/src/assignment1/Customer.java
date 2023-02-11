@@ -8,6 +8,8 @@ public class Customer {
 
     public Customer(String name, int initialBalance) {
 
+        if (name == null) throw new IllegalArgumentException("Customer cannot have a null name.");
+
         this.name = name;
         this.balance = initialBalance;
         this.basket = new Basket();
@@ -37,6 +39,8 @@ public class Customer {
 
     public int addToBasket(Reservation reservation) {
 
+        if (reservation == null) throw new IllegalArgumentException("Reservation cannot be null.");
+
         if(!reservation.reservationName().equals(name)) throw new IllegalArgumentException("The name on the reservation doesn't match!");
 
         basket.add(reservation);
@@ -45,6 +49,10 @@ public class Customer {
     }
 
     public int addToBasket(Hotel hotel, String roomType, int numNights, boolean breakfast){
+
+        if (hotel == null || roomType == null) throw new IllegalArgumentException("Arguments cannot be null!");
+
+        roomType = roomType.toLowerCase();
 
         if (breakfast) {
             BnBReservation reservation = new BnBReservation(name, hotel, roomType, numNights);
@@ -60,6 +68,8 @@ public class Customer {
     }
 
     public int addToBasket(Airport departureAirport, Airport arrivalAirport) {
+
+        if(departureAirport == null || arrivalAirport == null) throw new IllegalArgumentException("Arguments cannot be null!");
 
         FlightReservation reservation = new FlightReservation(name, departureAirport, arrivalAirport);
 

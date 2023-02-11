@@ -34,7 +34,7 @@ public class HotelReservation extends Reservation{
 
         HotelReservation hotelReservation = (HotelReservation) object;
 
-        if (hotelReservation.reservationName().equals(this.reservationName()) && hotelReservation.hotel.equals(this.hotel) && hotelReservation.roomType.equals(this.roomType) && hotelReservation.numNights == this.numNights && hotelReservation.roomPricePerNight == this.roomPricePerNight) return true;
+        if (hotelReservation.reservationName().toLowerCase().equals(this.reservationName().toLowerCase()) && hotelReservation.hotel.equals(this.hotel) && hotelReservation.roomType.toLowerCase().equals(this.roomType.toLowerCase()) && hotelReservation.numNights == this.numNights && hotelReservation.roomPricePerNight == this.roomPricePerNight) return true;
         else return false;
 
     }

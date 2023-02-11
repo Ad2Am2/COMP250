@@ -5,6 +5,8 @@ public abstract class Reservation {
     private String name;
 
     public Reservation(String name) {
+
+        if (name == null) throw new IllegalArgumentException("Name on reservation cannot be null");
         this.name = name;
     }
 
@@ -15,5 +17,6 @@ public abstract class Reservation {
     public abstract int getCost();
 
     public abstract boolean equals(Object object);
+
 
 }

@@ -8,22 +8,22 @@ public class Room {
 
     public Room(String type) {
 
-        if (type.equals("double")){
+        if (type.toLowerCase().equals("double")){
 
-            this.type = type;
+            this.type = type.toLowerCase();
             this.price = 90*100;
             this.available = true;
 
 
-        } else if (type.equals("queen")) {
+        } else if (type.toLowerCase().equals("queen")) {
 
-            this.type = type;
+            this.type = type.toLowerCase();
             this.price = 110*100;
             this.available = true;
 
-        } else if (type.equals("king")) {
+        } else if (type.toLowerCase().equals("king")) {
 
-            this.type = type;
+            this.type = type.toLowerCase();
             this.price = 150*100;
             this.available = true;
 
@@ -35,7 +35,9 @@ public class Room {
 
     public Room(Room room) {
 
-        this.type = room.type;
+        if (room == null) throw new IllegalArgumentException("Room to copy cannot be null");
+
+        this.type = room.type.toLowerCase();
         this.price = room.price;
         this.available = room.available;
 
@@ -55,9 +57,11 @@ public class Room {
 
     public static Room findAvailableRoom(Room[] rooms, String type) {
 
+        if (rooms == null || type == null) return null;
+
         for (int i = 0; i < rooms.length; i++) {
             if (!(rooms[i] == null)) {
-                if (rooms[i].available && rooms[i].type.equals(type)) {
+                if (rooms[i].available && rooms[i].type.toLowerCase().equals(type.toLowerCase())) {
                     return rooms[i];
                 }
             }

@@ -9,6 +9,8 @@ public class FlightReservation extends Reservation{
 
         super(name);
 
+        if (departureAirport == null || arrivalAirport == null) throw new IllegalArgumentException("Arguments cannot be null");
+
         if (departureAirport.equals(arrivalAirport)) throw new IllegalArgumentException("The departure and arrival airports must not be the same!");
 
         this.departureAirport = departureAirport;
@@ -41,7 +43,7 @@ public class FlightReservation extends Reservation{
 
         FlightReservation o = (FlightReservation) object;
 
-        if (o.departureAirport.equals(this.departureAirport) && o.arrivalAirport.equals(this.arrivalAirport) && o.reservationName().equals(this.reservationName())) {
+        if (o.departureAirport.equals(this.departureAirport) && o.arrivalAirport.equals(this.arrivalAirport) && o.reservationName().toLowerCase().equals(this.reservationName().toLowerCase())) {
             return true;
         }
 
