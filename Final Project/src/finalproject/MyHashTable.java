@@ -76,38 +76,79 @@ public class MyHashTable<K,V> implements Iterable<MyPair<K,V>>{
 	 */
 	public V put(K key, V value) {
 		//  ADD YOUR CODE BELOW HERE
-
-		if (get(key) == null) { // TODO issue: here, get(key) returns null if the value is null but ALSO if there no such key. We cannot use the getKeySet or getValueSet methods because they run in O(m)
-			// TODO BUTTTT we can make a private method to check if the key exists given a key that runs (on average) in O(1)!
-			System.out.println("Method not yet implemented");;
+		int hash = hashFunction(key);
+		if (!keyExists(key)) {
+			MyPair<K,V> pair = new MyPair<>(key, value);
+			buckets.get(hash).add(pair);
+			size++;
+			if (shouldRehash()) rehash();
+			return get(key); // Could also return value, but in this way we can do error checking like "if (put(key,value)!=value) thr	I(	"Unexpected result from function");"
+		} else {
+			for (int i = 0; i < buckets.get(hash).size(); i++) {
+				if (buckets.get(hash).get(i) == key) {
+					V oldValue = buckets.get(hash).get(i).getValue();
+					buckets.get(hash).get(i).setValue(value);
+					size++;
+					if (shouldRehash()) rehash();
+					return oldValue;
+				}
+			}
 		}
+
+		size++;
+		if (shouldRehash()) rehash();
 
 		return null;
 		//  ADD YOUR CODE ABOVE HERE
+	}
+
+	private boolean shouldRehash() {
+		return ((double) size)/capacity > MAX_LOAD_FACTOR;
+	}
+
+	private boolean keyExists(K key) {
+		int hash = hashFunction(key);
+
+		for (int i = 0; i < buckets.get(hash).size(); i++) { // As long as we have a good hash function and max load factor, each bucket can be considered of constant size, so this functions runs in constant time (O(1))
+			if (buckets.get(hash).get(i).equals(key)) return true;
+		}
+
+		return false;
 	}
 
 
 	/**
 	 * Get the value corresponding to key. Expected average runtime O(1)
 	 */
-
 	public V get(K key) {
-		//ADD YOUR CODE BELOW HERE
+
+		int hash = hashFunction(key);
+
+		for (int i = 0; i < buckets.get(hash).size(); i++) {
+			if (buckets.get(hash).get(i).getKey().equals(key)) return buckets.get(hash).get(i).getValue();
+		}
 
 		return null;
 
-		//ADD YOUR CODE ABOVE HERE
 	}
 
 	/**
 	 * Remove the HashPair corresponding to key . Expected average runtime O(1)
 	 */
 	public V remove(K key) {
-		//ADD YOUR CODE BELOW HERE
+
+		int hash = hashFunction(key);
+
+		for (int i = 0; i < buckets.get(hash).size(); i++) {
+			if (buckets.get(hash).get(i) == key) {
+				V oldValue = buckets.get(hash).get(i).getValue();
+				buckets.get(hash).remove(i);
+				return oldValue;
+			}
+		}
 
 		return null;
 
-		//ADD YOUR CODE ABOVE HERE
 	}
 
 
@@ -118,9 +159,28 @@ public class MyHashTable<K,V> implements Iterable<MyPair<K,V>>{
 	 * Expected average runtime is O(m), where m is the number of buckets
 	 */
 	public void rehash() {
-		//ADD YOUR CODE BELOW HERE
+		ArrayList<LinkedList<MyPair<K,V>>> newBuckets = new ArrayList<>();
 
-		//ADD YOUR CODE ABOVE HERE
+		capacity *= 2;
+
+		for (int i = 0; i < capacity; i++) {
+			newBuckets.add(i, new LinkedList<>());
+		}
+
+		MyPair<K,V> currentPair;
+		int currentHash;
+
+		for (int i = 0; i < buckets.size(); i++) {
+			for (int j = 0; j < buckets.get(i).size(); j++){
+				currentPair = buckets.get(i).get(j);
+				currentHash = hashFunction(currentPair.getKey());
+
+				newBuckets.get(currentHash).add(currentPair);
+
+			}
+		}
+
+		buckets = newBuckets;
 	}
 
 
@@ -128,25 +188,44 @@ public class MyHashTable<K,V> implements Iterable<MyPair<K,V>>{
 	 * Return a list of all the keys present in this hashtable.
 	 * Expected average runtime is O(m), where m is the number of buckets
 	 */
-
 	public ArrayList<K> getKeySet() {
-		//ADD YOUR CODE BELOW HERE
 
+		ArrayList<K> keyList = new ArrayList<K>();
+
+		for (int i = 0; i < buckets.size(); i++) {
+			for (int j =  0; j < buckets.get(i).size(); j++) {
+				keyList.add(buckets.get(i).get(j).getKey());
+			}
+		}
+		return keyList;
+	}
+
+
+	// TODO make a function that removes duplicates from a list in O(n) = O(m)
+	private <T> ArrayList<T> removeDuplicates(ArrayList<T> oldList) { // TODO unsure of creation of type parameter syntax
+
+		ArrayList<T> newList = new ArrayList<T>();
 		return null;
 
-		//ADD YOUR CODE ABOVE HERE
 	}
 
 	/**
 	 * Returns an ArrayList of unique values present in this hashtable.
 	 * Expected average runtime is O(m) where m is the number of buckets
+	 * //TODO The issue here is with only returning UNIQUEEE values
 	 */
 	public ArrayList<V> getValueSet() {
-		//ADD CODE BELOW HERE
-
-		return null;
-
-		//ADD CODE ABOVE HERE
+		ArrayList<V> output = new ArrayList<>();
+		for(LinkedList<MyPair<K,V>> bucket : this.buckets){
+			if(bucket.size()!=0){
+				for(MyPair<K,V> pair : bucket){
+					if(!output.contains(pair.getValue())){
+						output.add(pair.getValue());
+					}
+				}
+			}
+		}
+		return output;
 	}
 
 
@@ -155,11 +234,14 @@ public class MyHashTable<K,V> implements Iterable<MyPair<K,V>>{
 	 * Expected average runtime is O(m) where m is the number of buckets
 	 */
 	public ArrayList<MyPair<K, V>> getEntries() {
-		//ADD CODE BELOW HERE
+		ArrayList<MyPair<K,V>> entryList = new ArrayList<MyPair<K,V>>();
 
-		return null;
-
-		//ADD CODE ABOVE HERE
+		for (int i = 0; i < buckets.size(); i++) {
+			for (int j =  0; j < buckets.get(i).size(); i++) {
+				entryList.add(buckets.get(i).get(j));
+			}
+		}
+		return entryList;
 	}
 
 
@@ -171,28 +253,22 @@ public class MyHashTable<K,V> implements Iterable<MyPair<K,V>>{
 
 	private class MyHashIterator implements Iterator<MyPair<K,V>> {
 
-		private MyHashIterator() {
-			//ADD YOUR CODE BELOW HERE
 
-			//ADD YOUR CODE ABOVE HERE
+		private Iterator <MyPair<K,V>> pair;
+
+		private MyHashIterator() {
+			pair = getEntries().iterator();
 		}
 
 		@Override
 		public boolean hasNext() {
-			//ADD YOUR CODE BELOW HERE
-
-			return false;
-
-			//ADD YOUR CODE ABOVE HERE
+			return(pair.hasNext());
 		}
 
 		@Override
 		public MyPair<K,V> next() {
-			//ADD YOUR CODE BELOW HERE
-
+			if(hasNext()) return pair.next();
 			return null;
-
-			//ADD YOUR CODE ABOVE HERE
 		}
 
 	}
